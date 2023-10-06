@@ -150,5 +150,10 @@ module ImmosquareConstants
       :yellow               => "#ffff00",
       :yellowgreen          => "#9acd32"
     }.freeze
+
+
+    def color_name_to_hex(color_name)
+      COLORS[color_name.to_sym] || nil
+    end
   end
 end
