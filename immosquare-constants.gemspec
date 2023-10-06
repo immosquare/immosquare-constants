@@ -11,8 +11,8 @@ Gem::Specification.new do |spec|
   spec.email         = ["jules@immosquare.com"]
   spec.homepage      = "https://github.com/IMMOSQUARE/immosquare-constants"
 
-  spec.summary       = ""
-  spec.description   = ""
+  spec.summary       = "ImmosquareConstants is a comprehensive collection of constants useful for a variety of applications."
+  spec.description   = "ImmosquareConstants gem provides a robust set of constants to facilitate application development across various domains"
 
 
   spec.files         = Dir["lib/**/*"]
