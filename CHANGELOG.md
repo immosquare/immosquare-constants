@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.1.3] - 2023-10-06
+
+- Fix module
+
 ## [0.1.2] - 2023-10-06
 
 - Add missing require

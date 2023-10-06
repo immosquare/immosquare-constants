@@ -1,5 +1,5 @@
 module ImmosquareConstants
-  module Locale
+  module Color
     COLORS = {
       :aliceblue            => "#f0f8ff",
       :antiquewhite         => "#faebd7",
@@ -151,9 +151,12 @@ module ImmosquareConstants
       :yellowgreen          => "#9acd32"
     }.freeze
 
+    class << self
 
-    def color_name_to_hex(color_name)
-      COLORS[color_name.to_sym] || nil
+      def color_name_to_hex(color_name)
+        COLORS[color_name.to_sym] || nil
+      end
+
     end
   end
 end
