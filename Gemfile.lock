@@ -37,6 +37,7 @@ GEM
     concurrent-ruby (1.3.4)
     connection_pool (2.4.1)
     crass (1.0.6)
+    diff-lcs (1.5.1)
     drb (2.2.1)
     erb_lint (0.6.0)
       activesupport
@@ -83,7 +84,21 @@ GEM
       loofah (~> 2.21)
       nokogiri (~> 1.14)
     rainbow (3.1.1)
+    rake (13.2.1)
     regexp_parser (2.9.2)
+    rspec (3.13.0)
+      rspec-core (~> 3.13.0)
+      rspec-expectations (~> 3.13.0)
+      rspec-mocks (~> 3.13.0)
+    rspec-core (3.13.1)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-support (3.13.1)
     rubocop (1.66.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -111,8 +126,11 @@ PLATFORMS
   x86_64-darwin-22
 
 DEPENDENCIES
+  bundler
   immosquare-cleaner
   immosquare-constants!
+  rake
+  rspec
 
 BUNDLED WITH
    2.5.11
