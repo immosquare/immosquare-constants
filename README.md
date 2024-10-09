@@ -63,7 +63,7 @@ puts "Email: #{email} is valid? => #{valid}"
 
 ## Contributing
 
-Contributions are very much welcome! If you have enhancements, bug fixes, or other suggestions, please open an issue or submit a pull request on our [GitHub repository](https://github.com/IMMOSQUARE/immosquare-constants).
+Contributions are very much welcome! If you have enhancements, bug fixes, or other suggestions, please open an issue or submit a pull request on our [GitHub repository](https://github.com/immosquare/immosquare-constants).
 
 ## License
 

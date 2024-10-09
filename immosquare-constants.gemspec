@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
 
   spec.authors       = ["immosquare"]
   spec.email         = ["jules@immosquare.com"]
-  spec.homepage      = "https://github.com/IMMOSQUARE/immosquare-constants"
+  spec.homepage      = "https://github.com/immosquare/immosquare-constants"
 
   spec.summary       = "ImmosquareConstants is a comprehensive collection of constants useful for a variety of applications."
   spec.description   = "ImmosquareConstants gem provides a robust set of constants to facilitate application development across various domains"
