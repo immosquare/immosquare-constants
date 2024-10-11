@@ -23,14 +23,40 @@ namespace :immosquare_constants do
       end
     end
 
-    ##============================================================##
-    ## bundle exec rake immosquare_constants:sample:regex:email
-    ##============================================================##
+
     namespace :regex do
+      ##============================================================##
+      ## bundle exec rake immosquare_constants:sample:regex:email
+      ##============================================================##
       task :email do
-        email  = "test@test.com"
-        tester = ImmosquareConstants::Regex.email.match?(email)
-        puts "Email: #{email} => #{tester}"
+        valid_emails = [
+          "test@example.com",
+          "user.name+tag+sorting@example.co.uk",
+          "user_name@example-domain.com",
+          "user-name@sub.example.com"
+        ]
+        invalid_emails = [
+          "plainaddress",
+          "@no-local-part.com",
+          "Outlook Contact <outlook-contact@domain.com>",
+          "no-at.domain.com",
+          "a test@test.com",
+          "test@test.com extra",
+          "test@@example.com"
+        ]
+        (valid_emails + invalid_emails).each do |email|
+          tester = ImmosquareConstants::Regex.email.match?(email)
+          puts "Email: #{email} => #{tester}"
+        end
+      end
+
+      ##============================================================##
+      ## bundle exec rake immosquare_constants:sample:regex:email_in_string
+      ##============================================================##
+      task :email_in_string do
+        text   = "Veuillez contacter support@example.com ou sales@example.org pour plus d'informations."
+        emails = text.scan(ImmosquareConstants::Regex.email_in_string)
+        puts "Adresses email trouvées : #{emails.join(", ")}" if emails.any?
       end
     end
 
