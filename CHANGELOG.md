@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.1.6] - 2024-10-10
+
+- Improve email regex
+
 ## [0.1.5] - 2024-09-08
 
 - App ip Module
