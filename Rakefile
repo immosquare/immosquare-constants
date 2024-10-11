@@ -58,7 +58,28 @@ namespace :immosquare_constants do
         emails = text.scan(ImmosquareConstants::Regex.email_in_string)
         puts "Adresses email trouvées : #{emails.join(", ")}" if emails.any?
       end
+
+      ##============================================================##
+      ## bundle exec rake immosquare_constants:sample:regex:email_raw
+      ##============================================================##
+      task :email_raw do
+        texts = [
+          "Contact: support@example.com pour plus d'infos.",
+          "Voici un email: user@domain.com.",
+          "Il n'y a pas d'email ici !"
+        ]
+
+        texts.each do |text|
+          email_found = text.scan(ImmosquareConstants::Regex.email_raw)
+          if email_found.any?
+            puts "Email brut trouvé dans '#{text}' : #{email_found.join(", ")}"
+          else
+            puts "Aucun email trouvé dans '#{text}'."
+          end
+        end
+      end
     end
+
 
     ##============================================================##
     ## bundle exec rake immosquare_constants:sample:color:color_name_to_hex

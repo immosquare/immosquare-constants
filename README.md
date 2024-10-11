@@ -48,20 +48,39 @@ puts color
 
 ### Regex
 
-#### Email
-To validate an email format using a regular expression:
+#### email_raw
+The `email_raw` method defines the core email matching pattern used by both the `email` and `email_in_string` methods:
 
 ```ruby
-validates_format_of :email, :with => ImmosquareConstants::Regex.email
+regex = ImmosquareConstants::Regex.email_raw
+puts regex.source
+## => "[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}"
 ```
 
-Or manually test an email string:
+
+- `[A-Z0-9._%+-]+`: Matches one or more allowed characters in the local part of the email (before the `@`), including letters, digits, and common special characters.
+
+- `@`: Matches the `@` symbol separating the local part from the domain.
+
+- `[A-Z0-9.-]+`: Matches one or more allowed characters in the domain name, including letters, digits, dots, and hyphens.
+
+- `\.`: Matches a literal dot `.` separating the domain from the extension.
+
+- `[A-Z]{2,}`: Matches a domain extension consisting of at least two letters (e.g., `com`, `org`, `net`, `fr`).
+
+#### email
 
 ```ruby
 email = "test@test.com"
 valid = ImmosquareConstants::Regex.email.match?(email)
 puts "Email: #{email} is valid? => #{valid}"
 ## => Email: test@test.com is valid? => true
+```
+
+To validate an email format using a regular expression:
+
+```ruby
+validates_format_of :email, :with => ImmosquareConstants::Regex.email
 ```
 
 ---
@@ -75,6 +94,8 @@ emails = text.scan(ImmosquareConstants::Regex.email_in_string)
 puts emails.inspect
 ## => ["test@test.com", "test2@test2.fr"]
 ```
+
+
 
 
 ## Contributing
