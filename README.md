@@ -29,7 +29,8 @@ To retrieve the native language name for a given locale:
 
 ```ruby
 locale_name = ImmosquareConstants::Locale.native_name_for_locale(:fr)
-puts locale_name  # Outputs: "Français"
+puts locale_name
+## => Français
 ```
 
 Ensure you pass the locale as either a string or a symbol. If the locale isn't present in the list, it will return "Locale not found".
@@ -41,25 +42,40 @@ Convert a color name to its hexadecimal value:
 
 ```ruby
 color = ImmosquareColors.color_name_to_hex("red")
-puts color  # Outputs: #ff0000
+puts color
+## => #ff0000
 ```
 
 ### Regex
 
-### Email
+#### Email
 To validate an email format using a regular expression:
 
 ```ruby
 validates_format_of :email, :with => ImmosquareConstants::Regex.email
 ```
 
-Or manually test an email string
+Or manually test an email string:
 
 ```ruby
 email = "test@test.com"
 valid = ImmosquareConstants::Regex.email.match?(email)
 puts "Email: #{email} is valid? => #{valid}"
+## => Email: test@test.com is valid? => true
 ```
+
+---
+
+#### Email within a string
+To match an email embedded in a string:
+
+```ruby
+text   = "Contact us at test@test.com for more info or <test2@test2.fr"
+emails = text.scan(ImmosquareConstants::Regex.email_in_string)
+puts emails.inspect
+## => ["test@test.com", "test2@test2.fr"]
+```
+
 
 ## Contributing
 
