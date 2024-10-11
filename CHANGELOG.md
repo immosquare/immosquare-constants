@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.1.8] - 2024-10-11
+
+- Add new regex : email_raw
+
 ## [0.1.7] - 2024-10-10
 
 - Add new regex : email_in_string
