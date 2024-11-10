@@ -1,38 +1,38 @@
 module ImmosquareConstants
   module Locale
     LOCALES = {
-      # Afrikaans
+      # Afrikaans (South Africa, Namibia)
       :af      => "Afrikaans",
-      # Amharic
+      # Amharic (Ethiopia)
       :am      => "አማርኛ",
-      # Arabic
+      # Arabic (Middle East, North Africa)
       :ar      => "العربية",
-      # Azerbaijani
+      # Azerbaijani (Azerbaijan)
       :az      => "Azərbaycan",
-      # Belarusian
+      # Belarusian (Belarus)
       :be      => "Беларуская",
-      # Bulgarian
+      # Bulgarian (Bulgaria)
       :bg      => "Български",
-      # Bengali
+      # Bengali (Bangladesh, India)
       :bn      => "বাংলা",
-      # Bosnian
+      # Bosnian (Bosnia and Herzegovina)
       :bs      => "Bosanski",
-      # Catalan
+      # Catalan (Spain - Catalonia, Andorra)
       :ca      => "Català",
-      # Czech
+      # Czech (Czech Republic)
       :cs      => "Čeština",
-      # Welsh
+      # Welsh (United Kingdom - Wales)
       :cy      => "Cymraeg",
-      # Danish
+      # Danish (Denmark, Greenland, Faroe Islands)
       :da      => "Dansk",
-      # German
+      # German (Germany, Austria, Switzerland, Liechtenstein, Luxembourg)
       :de      => "Deutsch",
       :"de-AT" => "Deutsch (Österreich)",
       :"de-CH" => "Deutsch (Schweiz)",
       :"de-DE" => "Deutsch (Deutschland)",
-      # Greek
+      # Greek (Greece, Cyprus)
       :el      => "Ελληνικά",
-      # English
+      # English (United Kingdom, United States, Australia, Canada, and many others)
       :en      => "English",
       :"en-AU" => "English (Australia)",
       :"en-CA" => "English (Canada)",
@@ -42,7 +42,7 @@ module ImmosquareConstants
       :"en-NZ" => "English (New Zealand)",
       :"en-US" => "English (United States)",
       :"en-ZA" => "English (South Africa)",
-      # Spanish
+      # Spanish (Spain, Latin America, United States)
       :es      => "Español",
       :"es-AR" => "Español (Argentina)",
       :"es-BO" => "Español (Bolivia)",
@@ -63,139 +63,137 @@ module ImmosquareConstants
       :"es-US" => "Español (Estados Unidos)",
       :"es-UY" => "Español (Uruguay)",
       :"es-VE" => "Español (Venezuela)",
-      # Estonian
+      # Estonian (Estonia)
       :et      => "Eesti",
-      # Persian
+      # Persian (Iran, Afghanistan, Tajikistan)
       :fa      => "فارسی",
-      # Finnish
+      # Finnish (Finland)
       :fi      => "Suomi",
-      # French
+      # French (France, Canada, Belgium, Switzerland, Luxembourg, and others)
       :fr      => "Français",
       :"fr-BE" => "Français (Belgique)",
       :"fr-CA" => "Français (Canada)",
       :"fr-CH" => "Français (Suisse)",
       :"fr-LU" => "Français (Luxembourg)",
-      # Gujarati
+      # Gujarati (India)
       :gu      => "ગુજરાતી",
-      # Hebrew
+      # Hebrew (Israel)
       :he      => "עברית",
-      # Hindi
+      # Hindi (India)
       :hi      => "हिन्दी",
-      # Croatian
+      # Croatian (Croatia, Bosnia and Herzegovina)
       :hr      => "Hrvatski",
-      # Hungarian
+      # Hungarian (Hungary)
       :hu      => "Magyar",
-      # Armenian
+      # Armenian (Armenia)
       :hy      => "Հայերեն",
-      # Indonesian
+      # Indonesian (Indonesia)
       :id      => "Bahasa Indonesia",
-      # Icelandic
+      # Icelandic (Iceland)
       :is      => "Íslenska",
-      # Italian
+      # Italian (Italy, Switzerland)
       :it      => "Italiano",
       :"it-CH" => "Italiano (Svizzera)",
-      # Japanese
+      # Japanese (Japan)
       :ja      => "日本語",
-      # Georgian
+      # Georgian (Georgia)
       :ka      => "ქართული",
-      # Kazakh
+      # Kazakh (Kazakhstan)
       :kk      => "Қазақ",
-      # Khmer
+      # Khmer (Cambodia)
       :km      => "ភាសាខ្មែរ",
-      # Kannada
+      # Kannada (India)
       :kn      => "ಕನ್ನಡ",
-      # Korean
+      # Korean (South Korea, North Korea)
       :ko      => "한국어",
-      # Kyrgyz
+      # Kyrgyz (Kyrgyzstan)
       :ky      => "Кыргызча",
-      # Lao
+      # Lao (Laos)
       :lo      => "ລາວ",
-      # Lithuanian
+      # Lithuanian (Lithuania)
       :lt      => "Lietuvių",
-      # Latvian
+      # Latvian (Latvia)
       :lv      => "Latviešu",
-      # Macedonian
+      # Macedonian (North Macedonia)
       :mk      => "Македонски",
-      # Malayalam
+      # Malayalam (India)
       :ml      => "മലയാളം",
-      # Mongolian
+      # Mongolian (Mongolia)
       :mn      => "Монгол",
-      # Marathi
+      # Marathi (India)
       :mr      => "मराठी",
-      # Malay
+      # Malay (Malaysia, Brunei)
       :ms      => "Bahasa Melayu",
-      # Maltese
+      # Maltese (Malta)
       :mt      => "Malti",
-      # Burmese
+      # Burmese (Myanmar)
       :my      => "မြန်မာ",
-      # Nepali
+      # Nepali (Nepal)
       :ne      => "नेपाली",
-      # Dutch
+      # Dutch (Netherlands, Belgium)
       :nl      => "Nederlands",
-      # Norwegian
+      # Norwegian (Norway)
       :no      => "Norsk",
-      # Odia
+      # Odia (India)
       :or      => "ଓଡ଼ିଆ",
-      # Punjabi
+      # Punjabi (India, Pakistan)
       :pa      => "ਪੰਜਾਬੀ",
-      # Polish
+      # Polish (Poland)
       :pl      => "Polski",
-      # Pashto
+      # Pashto (Afghanistan, Pakistan)
       :ps      => "پښتو",
-      # Portuguese
+      # Portuguese (Portugal, Brazil, and others)
       :pt      => "Português",
       :"pt-BR" => "Português (Brasil)",
-      # Romanian
+      # Romanian (Romania, Moldova)
       :ro      => "Română",
-      # Russian
+      # Russian (Russia, Belarus, and others)
       :ru      => "Русский",
-      # Sindhi
+      # Sindhi (Pakistan, India)
       :sd      => "سنڌي",
-      # Sinhala
+      # Sinhala (Sri Lanka)
       :si      => "සිංහල",
-      # Slovak
+      # Slovak (Slovakia)
       :sk      => "Slovenčina",
-      # Slovenian
+      # Slovenian (Slovenia)
       :sl      => "Slovenščina",
-      # Somali
+      # Somali (Somalia, Kenya)
       :so      => "Soomaali",
-      # Albanian
+      # Albanian (Albania, Kosovo)
       :sq      => "Shqip",
-      # Serbian
+      # Serbian (Serbia, Bosnia and Herzegovina, Montenegro)
       :sr      => "Српски",
-      # Sundanese
-      :su      => "Basa Sunda",
-      # Swedish
+      # Swedish (Sweden, Finland)
       :sv      => "Svenska",
-      # Swahili
+      # Swahili (Kenya, Tanzania, Uganda, and others)
       :sw      => "Kiswahili",
-      # Tamil
+      # Tamil (India, Sri Lanka)
       :ta      => "தமிழ்",
-      # Telugu
+      # Telugu (India)
       :te      => "తెలుగు",
-      # Tajik
+      # Tajik (Tajikistan)
       :tg      => "Тоҷикӣ",
-      # Thai
+      # Thai (Thailand)
       :th      => "ไทย",
-      # Tagalog
+      # Tagalog (Philippines)
       :tl      => "Filipino",
-      # Turkish
+      # Turkish (Turkey, Cyprus)
       :tr      => "Türkçe",
-      # Ukrainian
+      # Ukrainian (Ukraine)
       :uk      => "Українська",
-      # Urdu
+      # Urdu (Pakistan, India)
       :ur      => "اردو",
-      # Uzbek
+      # Uzbek (Uzbekistan)
       :uz      => "O'zbek",
-      # Vietnamese
+      # Vietnamese (Vietnam)
       :vi      => "Tiếng Việt",
-      # Xhosa
+      # Xhosa (South Africa)
       :xh      => "isiXhosa",
-      # Chinese
+      # Chinese (China, Taiwan, Singapore, Hong Kong)
       :zh      => "中文",
       :"zh-CN" => "中文 (简体)",
       :"zh-TW" => "中文 (繁體)",
-      # Zulu
+      # Zulu (South Africa)
       :zu      => "isiZulu"
     }.freeze
 
