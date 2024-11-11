@@ -200,7 +200,14 @@ module ImmosquareConstants
     class << self
 
       def native_name_for_locale(locale)
-        LOCALES[locale.to_sym]
+        begin
+          key = locale.to_s.split("-").map.with_index do |part, index|
+            index == 0 ? part.downcase : part.upcase
+          end.join("-").to_sym
+          LOCALES[key]
+        rescue StandardError
+          nil
+        end
       end
 
     end
