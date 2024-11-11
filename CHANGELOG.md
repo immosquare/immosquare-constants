@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.1.9] - 2024-10-10
+
+- update method to manage country specifications
+
 ## [0.1.8] - 2024-10-11
 
 - Add new regex : email_raw
