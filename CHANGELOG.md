@@ -1,6 +1,10 @@
 ## [Unreleased]
 
-## [0.1.9] - 2024-10-10
+## [0.1.10] - 2024-11-12
+
+- add new method languages_with_native_names
+
+## [0.1.9] - 2024-11-10
 
 - update method to manage country specifications
 
