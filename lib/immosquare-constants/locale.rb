@@ -199,11 +199,19 @@ module ImmosquareConstants
 
     class << self
 
+      ##============================================================##
+      ## Renvoie la liste des langues disponibles sans les langues régionales.
+      ##============================================================##
+      def languages_with_native_names
+        LOCALES.reject {|key, _value| key.to_s.include?("-") }
+      end
+
+      ##============================================================##
+      ## Renvoie le nom de la langue correspondant à la locale passée en paramètre.
+      ##============================================================##
       def native_name_for_locale(locale)
         begin
-          key = locale.to_s.split("-").map.with_index do |part, index|
-            index == 0 ? part.downcase : part.upcase
-          end.join("-").to_sym
+          key = locale.to_s.split("-").map.with_index {|part, index| index == 0 ? part.downcase : part.upcase }.join("-").to_sym
           LOCALES[key]
         rescue StandardError
           nil
