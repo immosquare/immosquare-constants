@@ -44,6 +44,7 @@ module ImmosquareConstants
       :"en-ZA" => "English (South Africa)",
       # Spanish (Spain, Latin America, United States)
       :es      => "Español",
+      :"es-LA" => "Español (Latinoamérica)",
       :"es-AR" => "Español (Argentina)",
       :"es-BO" => "Español (Bolivia)",
       :"es-CL" => "Español (Chile)",
