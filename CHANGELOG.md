@@ -1,3 +1,6 @@
+## [0.1.11] - 2025-04-14
+- Add new locale : es-LA
+
 ## [0.1.10] - 2024-11-12
 - add new method languages_with_native_names
 
