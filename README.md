@@ -17,10 +17,11 @@ gem 'immosquare-constants'
 To get the real public IP address of the machine:
 
 ```ruby
-ip = ImmosquareConstants::Ip.get_real_ip
-puts "Real IP: #{ip}"
+ips = ImmosquareConstants::Ip.get_ips
+puts "local: #{ips.local}"
+puts "client: #{ips.client}"
 ```
-The IP retrieval uses Socket to fall back on a local private IP if it cannot fetch the public IP.
+
 
 
 ### Locale

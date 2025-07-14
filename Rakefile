@@ -3,12 +3,11 @@ require "immosquare-constants"
 namespace :immosquare_constants do
   namespace :sample do
     ##============================================================##
-    ## bundle exec rake immosquare_constants:sample:ip:get_real_ip
+    ## bundle exec rake immosquare_constants:sample:ip:get_ips
     ##============================================================##
     namespace :ip do
-      task :get_real_ip do
-        ip = ImmosquareConstants::Ip.get_real_ip
-        puts ip
+      task :get_ips do
+        puts ImmosquareConstants::Ip.get_ips
       end
     end
 
