@@ -1,3 +1,7 @@
+## [0.1.12] - 2025-07-14
+- Add new method get_ips
+- Deprecate get_real_ip
+
 ## [0.1.11] - 2025-04-14
 - Add new locale : es-LA
 
