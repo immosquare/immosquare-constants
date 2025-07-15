@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    immosquare-constants (0.1.13)
+    immosquare-constants (0.1.14)
 
 GEM
   remote: https://rubygems.org/
