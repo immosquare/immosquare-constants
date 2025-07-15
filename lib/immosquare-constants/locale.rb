@@ -212,6 +212,7 @@ module ImmosquareConstants
       ##============================================================##
       def native_name_for_locale(locale)
         begin
+          return nil if locale.nil? || locale.to_s.strip.empty?
           key = locale.to_s.split("-").map.with_index {|part, index| index == 0 ? part.downcase : part.upcase }.join("-").to_sym
           LOCALES[key]
         rescue StandardError

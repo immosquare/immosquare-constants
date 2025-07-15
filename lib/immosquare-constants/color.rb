@@ -154,7 +154,8 @@ module ImmosquareConstants
     class << self
 
       def color_name_to_hex(color_name)
-        COLORS[color_name.to_sym] || nil
+        return nil if color_name.nil?
+        COLORS[color_name.to_s.downcase.to_sym] || nil
       end
 
     end
