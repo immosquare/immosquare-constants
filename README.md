@@ -77,6 +77,32 @@ The IP detection uses a smart hierarchy:
 
 This ensures accurate client IP detection even behind proxies, load balancers, or CDNs.
 
+### Itération sur les IPs
+
+Vous pouvez itérer sur les paires clé-valeur (clé : :local, :public, :client) de l'objet `IpResult` :
+
+```ruby
+ips = ImmosquareConstants::Ip.get_ips(request)
+
+# Itération sur les paires clé-valeur
+ips.each do |key, value|
+  puts "#{key} => #{value}"
+end
+# :local => 192.168.1.100
+# :public => 203.0.113.1
+# :client => 10.0.0.1
+
+# Itération avec index
+ips.each_with_index do |(key, value), index|
+  puts "#{index}: #{key} => #{value}"
+end
+# 0: :local => 192.168.1.100
+# 1: :public => 203.0.113.1
+# 2: :client => 10.0.0.1
+```
+
+L'itération se fait désormais sur le hash, ce qui permet d'accéder à la clé et à la valeur à chaque tour de boucle.
+
 
 ### Locale
 
