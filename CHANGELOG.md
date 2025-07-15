@@ -1,3 +1,8 @@
+## [0.1.15] - 2025-07-16
+- **BREAKING**: The `.each` and `.each_with_index` methods of `IpResult` now iterate over key-value pairs of the hash (e.g., `:local => ...`) instead of an array of values.
+- **IMPROVED**: Updated RSpec tests to reflect this new behavior.
+- **DOCS**: Added usage examples for `.each` and `.each_with_index` in the README.
+
 ## [0.1.14] - 2025-01-XX
 - **NEW**: Add public IP support to `IpResult` class
 - **IMPROVED**: `IpResult` now includes local, public, and client IPs
