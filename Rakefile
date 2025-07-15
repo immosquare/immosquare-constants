@@ -1,4 +1,7 @@
 require "immosquare-constants"
+require "rspec/core/rake_task"
+
+RSpec::Core::RakeTask.new(:spec)
 
 namespace :immosquare_constants do
   namespace :sample do

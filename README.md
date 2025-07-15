@@ -150,6 +150,15 @@ puts emails.inspect
 
 
 
+## Testing
+
+This gem uses RSpec for testing. Here's how to run the tests:
+
+```bash
+bundle exec rspec
+```
+
+
 ## Contributing
 
 Contributions are very much welcome! If you have enhancements, bug fixes, or other suggestions, please open an issue or submit a pull request on our [GitHub repository](https://github.com/immosquare/immosquare-constants).
