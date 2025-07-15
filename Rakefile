@@ -11,7 +11,9 @@ namespace :immosquare_constants do
       ##============================================================##
       task :get_ips do
         ips = ImmosquareConstants::Ip.get_ips
-        puts ips.to_json
+        ips.each do |key, value|
+          puts "#{key} => #{value}"
+        end
       end
 
       ##============================================================##

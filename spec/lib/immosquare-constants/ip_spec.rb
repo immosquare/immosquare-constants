@@ -182,5 +182,37 @@ RSpec.describe(ImmosquareConstants::Ip) do
         expect(ip_result.client).to(eq("10.0.0.1"))
       end
     end
+
+    describe "#each" do
+      it "iterates over key-value pairs" do
+        pairs = []
+        ip_result.each { |key, value| pairs << [key, value] }
+        expect(pairs).to(eq([
+          [:local, "192.168.1.100"],
+          [:public, "203.0.113.1"],
+          [:client, "10.0.0.1"]
+        ]))
+      end
+
+      it "returns an enumerator when no block is given" do
+        expect(ip_result.each).to(be_a(Enumerator))
+      end
+    end
+
+    describe "#each_with_index" do
+      it "iterates over key-value pairs with their indices" do
+        pairs_with_index = []
+        ip_result.each_with_index {|(key, value), index| pairs_with_index << [key, value, index] }
+        expect(pairs_with_index).to(eq([
+                                         [:local, "192.168.1.100", 0],
+                                         [:public, "203.0.113.1", 1],
+                                         [:client, "10.0.0.1", 2]
+                                       ]))
+      end
+
+      it "returns an enumerator when no block is given" do
+        expect(ip_result.each_with_index).to(be_a(Enumerator))
+      end
+    end
   end
 end

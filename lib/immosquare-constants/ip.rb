@@ -50,6 +50,14 @@ module ImmosquareConstants
         to_hash
       end
 
+      def each(&)
+        to_hash.each(&)
+      end
+
+      def each_with_index(&)
+        to_hash.each_with_index(&)
+      end
+
     end
 
     class << self
