@@ -14,14 +14,65 @@ gem 'immosquare-constants'
 
 ### IP
 
-To get the real public IP address of the machine:
+The IP module provides comprehensive IP address management with intelligent proxy handling and multiple output formats.
+
+#### Get IP addresses
 
 ```ruby
-ips = ImmosquareConstants::Ip.get_ips
-puts "local: #{ips.local}"
-puts "client: #{ips.client}"
+# Get both local and client IP addresses
+ips = ImmosquareConstants::Ip.get_ips(request)
+puts "Local IP: #{ips.local}"
+puts "Client IP: #{ips.client}"
+
+# Output example:
+# Local IP: 192.168.1.100
+# Client IP: 203.0.113.1
 ```
 
+#### Get public IP address
+
+```ruby
+# Get the public IP address of the machine
+ip = ImmosquareConstants::Ip.get_my_ip_from_aws
+puts ip
+# => 203.0.113.1
+```
+
+#### Multiple output formats
+
+The `get_ips` method returns an `IpResult` object with various conversion methods:
+
+```ruby
+ips = ImmosquareConstants::Ip.get_ips(request)
+
+# JSON serialization
+puts ips.to_json
+# => {"local":"192.168.1.100","client":"203.0.113.1"}
+
+# Hash conversion
+hash = ips.to_hash
+# => {:local=>"192.168.1.100", :client=>"203.0.113.1"}
+
+# String representation
+puts ips.to_s
+# => local: 192.168.1.100, client: 203.0.113.1
+
+# Array conversion
+array = ips.to_a
+# => ["192.168.1.100", "203.0.113.1"]
+
+# Safe navigation
+client_ip = ImmosquareConstants::Ip.get_ips(request)&.client
+```
+
+#### Intelligent proxy handling
+
+The IP detection uses a smart hierarchy:
+1. `HTTP_X_REAL_IP` header (often set by load balancers/proxies)
+2. `request.ip` (Rails intelligent method)
+3. `request.remote_ip` (direct connection IP)
+
+This ensures accurate client IP detection even behind proxies, load balancers, or CDNs.
 
 
 ### Locale

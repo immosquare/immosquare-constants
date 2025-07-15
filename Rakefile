@@ -2,12 +2,20 @@ require "immosquare-constants"
 
 namespace :immosquare_constants do
   namespace :sample do
-    ##============================================================##
-    ## bundle exec rake immosquare_constants:sample:ip:get_ips
-    ##============================================================##
     namespace :ip do
+      ##============================================================##
+      ## bundle exec rake immosquare_constants:sample:ip:get_ips
+      ##============================================================##
       task :get_ips do
-        puts ImmosquareConstants::Ip.get_ips
+        ips = ImmosquareConstants::Ip.get_ips
+        puts ips.to_json
+      end
+
+      ##============================================================##
+      ## bundle exec rake immosquare_constants:sample:ip:get_my_ip_from_aws
+      ##============================================================##
+      task :get_my_ip_from_aws do
+        puts ImmosquareConstants::Ip.get_my_ip_from_aws
       end
     end
 

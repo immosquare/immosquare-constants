@@ -1,3 +1,11 @@
+## [0.1.13] - 2025-07-15
+- **BREAKING**: Rename `get_real_ip` to `get_my_ip_from_aws` for better clarity
+- **NEW**: Add `IpResult` class with multiple output formats (`to_json`, `to_hash`, `to_s`, `to_a`, `inspect`)
+- **IMPROVED**: Enhanced IP detection with intelligent proxy handling
+- **IMPROVED**: Better error handling and fallback mechanisms
+- **IMPROVED**: Support for safe navigation operator (`&.client`, `&.local`)
+- **FIXED**: Resolve Ruby 3.5+ compatibility issues with OpenStruct
+
 ## [0.1.12] - 2025-07-14
 - Add new method get_ips
 - Deprecate get_real_ip
