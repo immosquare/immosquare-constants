@@ -28,15 +28,17 @@ RSpec.describe(ImmosquareConstants::Ip) do
         expect(result).to(be_a(ImmosquareConstants::Ip::IpResult))
       end
 
-      it "has local and client attributes" do
+      it "has local, public and client attributes" do
         result = described_class.get_ips(mock_request)
         expect(result).to(respond_to(:local))
+        expect(result).to(respond_to(:public))
         expect(result).to(respond_to(:client))
       end
 
       it "returns valid IP addresses" do
         result = described_class.get_ips(mock_request)
         expect(result.local).to(match(/\A\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/))
+        expect(result.public).to(match(/\A\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/))
         expect(result.client).to(match(/\A\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/))
       end
 
@@ -117,7 +119,7 @@ RSpec.describe(ImmosquareConstants::Ip) do
   end
 
   describe "IpResult" do
-    let(:ip_result) { ImmosquareConstants::Ip::IpResult.new("192.168.1.100", "203.0.113.1") }
+    let(:ip_result) { ImmosquareConstants::Ip::IpResult.new("192.168.1.100", "203.0.113.1", "10.0.0.1") }
 
     describe "#to_json" do
       it "returns valid JSON" do
@@ -125,17 +127,18 @@ RSpec.describe(ImmosquareConstants::Ip) do
         expect { JSON.parse(json) }.not_to(raise_error)
       end
 
-      it "contains local and client IPs" do
+      it "contains local, public and client IPs" do
         json = JSON.parse(ip_result.to_json)
         expect(json["local"]).to(eq("192.168.1.100"))
-        expect(json["client"]).to(eq("203.0.113.1"))
+        expect(json["public"]).to(eq("203.0.113.1"))
+        expect(json["client"]).to(eq("10.0.0.1"))
       end
     end
 
     describe "#to_hash" do
-      it "returns a hash with local and client keys" do
+      it "returns a hash with local, public and client keys" do
         hash = ip_result.to_hash
-        expect(hash).to(eq(:local => "192.168.1.100", :client => "203.0.113.1"))
+        expect(hash).to(eq(:local => "192.168.1.100", :public => "203.0.113.1", :client => "10.0.0.1"))
       end
     end
 
@@ -147,13 +150,13 @@ RSpec.describe(ImmosquareConstants::Ip) do
 
     describe "#to_s" do
       it "returns a readable string" do
-        expect(ip_result.to_s).to(eq("local: 192.168.1.100, client: 203.0.113.1"))
+        expect(ip_result.to_s).to(eq("local: 192.168.1.100, public: 203.0.113.1, client: 10.0.0.1"))
       end
     end
 
     describe "#to_a" do
-      it "returns an array with local and client IPs" do
-        expect(ip_result.to_a).to(eq(["192.168.1.100", "203.0.113.1"]))
+      it "returns an array with local, public and client IPs" do
+        expect(ip_result.to_a).to(eq(["192.168.1.100", "203.0.113.1", "10.0.0.1"]))
       end
     end
 
@@ -162,6 +165,7 @@ RSpec.describe(ImmosquareConstants::Ip) do
         expect(ip_result.inspect).to(include("ImmosquareConstants::Ip::IpResult"))
         expect(ip_result.inspect).to(include("192.168.1.100"))
         expect(ip_result.inspect).to(include("203.0.113.1"))
+        expect(ip_result.inspect).to(include("10.0.0.1"))
       end
     end
 
@@ -170,8 +174,12 @@ RSpec.describe(ImmosquareConstants::Ip) do
         expect(ip_result.local).to(eq("192.168.1.100"))
       end
 
+      it "allows access to public IP" do
+        expect(ip_result.public).to(eq("203.0.113.1"))
+      end
+
       it "allows access to client IP" do
-        expect(ip_result.client).to(eq("203.0.113.1"))
+        expect(ip_result.client).to(eq("10.0.0.1"))
       end
     end
   end

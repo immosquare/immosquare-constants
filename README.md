@@ -19,14 +19,16 @@ The IP module provides comprehensive IP address management with intelligent prox
 #### Get IP addresses
 
 ```ruby
-# Get both local and client IP addresses
+# Get local, public and client IP addresses
 ips = ImmosquareConstants::Ip.get_ips(request)
 puts "Local IP: #{ips.local}"
+puts "Public IP: #{ips.public}"
 puts "Client IP: #{ips.client}"
 
 # Output example:
 # Local IP: 192.168.1.100
-# Client IP: 203.0.113.1
+# Public IP: 203.0.113.1
+# Client IP: 10.0.0.1
 ```
 
 #### Get public IP address
@@ -47,22 +49,23 @@ ips = ImmosquareConstants::Ip.get_ips(request)
 
 # JSON serialization
 puts ips.to_json
-# => {"local":"192.168.1.100","client":"203.0.113.1"}
+# => {"local":"192.168.1.100","public":"203.0.113.1","client":"10.0.0.1"}
 
 # Hash conversion
 hash = ips.to_hash
-# => {:local=>"192.168.1.100", :client=>"203.0.113.1"}
+# => {:local=>"192.168.1.100", :public=>"203.0.113.1", :client=>"10.0.0.1"}
 
 # String representation
 puts ips.to_s
-# => local: 192.168.1.100, client: 203.0.113.1
+# => local: 192.168.1.100, public: 203.0.113.1, client: 10.0.0.1
 
 # Array conversion
 array = ips.to_a
-# => ["192.168.1.100", "203.0.113.1"]
+# => ["192.168.1.100", "203.0.113.1", "10.0.0.1"]
 
 # Safe navigation
 client_ip = ImmosquareConstants::Ip.get_ips(request)&.client
+public_ip = ImmosquareConstants::Ip.get_ips(request)&.public
 ```
 
 #### Intelligent proxy handling
@@ -82,20 +85,25 @@ To retrieve the native language name for a given locale:
 ```ruby
 locale_name = ImmosquareConstants::Locale.native_name_for_locale(:fr)
 puts locale_name
-## => Français
+# => Français
 ```
 
-Ensure you pass the locale as either a string or a symbol. If the locale isn't present in the list, it will return "Locale not found".
+Ensure you pass the locale as either a string or a symbol. If the locale isn't present in the list, it will return `nil`.
 
 
 ### Color
 
-Convert a color name to its hexadecimal value:
+Convert a color name to its hexadecimal value (case-insensitive):
 
 ```ruby
-color = ImmosquareColors.color_name_to_hex("red")
+color = ImmosquareConstants::Color.color_name_to_hex("red")
 puts color
-## => #ff0000
+# => #ff0000
+
+# Case variations work too
+ImmosquareConstants::Color.color_name_to_hex("RED")     # => #ff0000
+ImmosquareConstants::Color.color_name_to_hex("Red")     # => #ff0000
+ImmosquareConstants::Color.color_name_to_hex(:red)      # => #ff0000
 ```
 
 ### Regex
@@ -106,7 +114,7 @@ The `email_raw` method defines the core email matching pattern used by both the 
 ```ruby
 regex = ImmosquareConstants::Regex.email_raw
 puts regex.source
-## => "[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}"
+# => "[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}"
 ```
 
 
@@ -126,7 +134,7 @@ puts regex.source
 email = "test@test.com"
 valid = ImmosquareConstants::Regex.email.match?(email)
 puts "Email: #{email} is valid? => #{valid}"
-## => Email: test@test.com is valid? => true
+# => Email: test@test.com is valid? => true
 ```
 
 To validate an email format using a regular expression:
@@ -144,7 +152,7 @@ To match an email embedded in a string:
 text   = "Contact us at test@test.com for more info or <test2@test2.fr"
 emails = text.scan(ImmosquareConstants::Regex.email_in_string)
 puts emails.inspect
-## => ["test@test.com", "test2@test2.fr"]
+# => ["test@test.com", "test2@test2.fr"]
 ```
 
 
@@ -154,9 +162,70 @@ puts emails.inspect
 
 This gem uses RSpec for testing. Here's how to run the tests:
 
+### Prerequisites
+
+Make sure you have all dependencies installed:
+
+```bash
+bundle install
+```
+
+### Running Tests
+
+#### Run all tests
 ```bash
 bundle exec rspec
 ```
+
+#### Run tests for a specific module
+```bash
+# Test IP module only
+bundle exec rspec spec/lib/immosquare-constants/ip_spec.rb
+
+# Test Color module only
+bundle exec rspec spec/lib/immosquare-constants/color_spec.rb
+
+# Test Locale module only
+bundle exec rspec spec/lib/immosquare-constants/locale_spec.rb
+
+# Test Regex module only
+bundle exec rspec spec/lib/immosquare-constants/regex_spec.rb
+```
+
+#### Run tests with more details
+```bash
+# Show detailed output
+bundle exec rspec --format documentation
+
+# Show only failing tests
+bundle exec rspec --format progress
+
+# Run tests and stop on first failure
+bundle exec rspec --fail-fast
+```
+
+#### Using Rake tasks
+```bash
+# Run all tests via Rake
+bundle exec rake spec
+
+# Run sample tasks to test functionality
+bundle exec rake immosquare_constants:sample:ip:get_my_ip_from_aws
+bundle exec rake immosquare_constants:sample:color:color_name_to_hex
+bundle exec rake immosquare_constants:sample:locale:native_name_for_locale
+```
+
+### Test Coverage
+
+The test suite covers:
+- ✅ **IP Module**: Local, public and client IP detection, proxy handling, multiple output formats
+- ✅ **Color Module**: Color name to hex conversion with case-insensitive support
+- ✅ **Locale Module**: Native language name retrieval with nil fallback handling
+- ✅ **Regex Module**: Email validation patterns and string matching
+
+### Continuous Integration
+
+Tests are automatically run on every pull request to ensure code quality and prevent regressions.
 
 
 ## Contributing

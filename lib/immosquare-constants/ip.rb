@@ -10,16 +10,18 @@ module ImmosquareConstants
     ##============================================================##
     class IpResult
 
-      attr_reader :local, :client
+      attr_reader :local, :public, :client
 
-      def initialize(local_ip, client_ip)
-        @local = local_ip
+      def initialize(local_ip, public_ip, client_ip)
+        @local  = local_ip
+        @public = public_ip
         @client = client_ip
       end
 
       def to_json(*)
         {
           :local  => @local,
+          :public => @public,
           :client => @client
         }.to_json(*)
       end
@@ -27,20 +29,21 @@ module ImmosquareConstants
       def to_hash
         {
           :local  => @local,
+          :public => @public,
           :client => @client
         }
       end
 
       def to_s
-        "local: #{@local}, client: #{@client}"
+        "local: #{@local}, public: #{@public}, client: #{@client}"
       end
 
       def inspect
-        "#<ImmosquareConstants::Ip::IpResult local: #{@local.inspect}, client: #{@client.inspect}>"
+        "#<ImmosquareConstants::Ip::IpResult local: #{@local.inspect}, public: #{@public.inspect}, client: #{@client.inspect}>"
       end
 
       def to_a
-        [@local, @client]
+        [@local, @public, @client]
       end
 
       def to_h
@@ -64,6 +67,7 @@ module ImmosquareConstants
       def get_ips(request = nil)
         IpResult.new(
           get_local_ip,
+          get_public_ip_from_aws,
           get_client_ip(request)
         )
       end
