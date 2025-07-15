@@ -1,3 +1,11 @@
+## [0.1.14] - 2025-01-XX
+- **NEW**: Add public IP support to `IpResult` class
+- **IMPROVED**: `IpResult` now includes local, public, and client IPs
+- **IMPROVED**: All conversion methods updated to include public IP (`to_json`, `to_hash`, `to_s`, `to_a`, `inspect`)
+- **IMPROVED**: Enhanced test coverage for all IP types
+- **IMPROVED**: Updated README with comprehensive IP functionality examples
+- **FIXED**: Constructor now properly accepts 3 parameters (local, public, client)
+
 ## [0.1.13] - 2025-07-15
 - **BREAKING**: Rename `get_real_ip` to `get_my_ip_from_aws` for better clarity
 - **NEW**: Add `IpResult` class with multiple output formats (`to_json`, `to_hash`, `to_s`, `to_a`, `inspect`)
