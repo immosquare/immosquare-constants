@@ -121,7 +121,7 @@ module ImmosquareConstants
           raise("IP is localhost (127.0.0.1)") if ip == "127.0.0.1"
 
           ip
-        rescue StandardError => e
+        rescue StandardError
           get_public_ip_from_aws
         end
       end
@@ -137,14 +137,14 @@ module ImmosquareConstants
             raise("No IP found") unless response.is_a?(Net::HTTPSuccess)
 
             response.body.strip
-          rescue StandardError => e
+          rescue StandardError
             s  = Socket.ip_address_list.find(&:ipv4_private?)
             s  = Socket.ip_address_list.first if s.nil?
             raise("No IP found") if s.nil?
 
             s.ip_address
           end
-        rescue StandardError => e
+        rescue StandardError
           "0.0.0.0"
         end
       end
