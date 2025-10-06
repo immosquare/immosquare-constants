@@ -1,3 +1,6 @@
+## [0.1.16] - 2025-10-06
+- disable ssl verification to avoid SSL_connect returned=1 errno=0
+
 ## [0.1.15] - 2025-07-16
 - **BREAKING**: add `.each` and `.each_with_index` to `IpResult` class
 
