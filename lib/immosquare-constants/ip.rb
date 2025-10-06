@@ -127,17 +127,21 @@ module ImmosquareConstants
       end
 
       ##============================================================##
-      ## Get public IP address with fallback (for production)
+      ## Get public IP address with fallback
       ##============================================================##
       def get_public_ip_from_aws
         begin
           begin
-            uri = URI.parse("https://checkip.amazonaws.com/")
-            response = Net::HTTP.get_response(uri)
-            raise("No IP found") unless response.is_a?(Net::HTTPSuccess)
+            uri              = URI.parse("https://checkip.amazonaws.com/")
+            http             = Net::HTTP.new(uri.host, uri.port)
+            http.use_ssl     = true
+            http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+            response = http.get(uri.request_uri)
+            raise("No IP found") if !response.is_a?(Net::HTTPSuccess)
 
             response.body.strip
-          rescue StandardError
+          rescue StandardError => e
+            puts("Error getting public IP from AWS: #{e.message}")
             s  = Socket.ip_address_list.find(&:ipv4_private?)
             s  = Socket.ip_address_list.first if s.nil?
             raise("No IP found") if s.nil?
