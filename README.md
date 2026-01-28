@@ -4,10 +4,8 @@
 
 ## Installation
 
-Add this line to your Gemfile:
-
 ```ruby
-gem 'immosquare-constants'
+gem "immosquare-constants"
 ```
 
 ## Usage
