@@ -38,6 +38,22 @@ puts ip
 # => 203.0.113.1
 ```
 
+#### Get front IP
+
+`get_front_ip` resolves the request host through DNS to return the public IPv4 address that browsers actually reach (reverse proxy, CDN, load balancer) before traffic hits the application server. Useful when you need to know "from the outside, what IP does my domain point to?".
+
+```ruby
+# Inside a controller / middleware
+front_ip = ImmosquareConstants::Ip.get_front_ip(request)
+puts front_ip
+# => 203.0.113.1
+```
+
+Behavior:
+- Uses explicit Google (`8.8.8.8`) and Cloudflare (`1.1.1.1`) nameservers with a 2s timeout per server, to avoid hangs when the system resolver is misconfigured.
+- Filters to IPv4 only, for consistency with the other IP helpers.
+- Returns `nil` if `request` is missing, the host is empty, or DNS resolution fails.
+
 #### Multiple output formats
 
 The `get_ips` method returns an `IpResult` object with various conversion methods:

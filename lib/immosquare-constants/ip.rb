@@ -2,6 +2,7 @@ require "socket"
 require "net/http"
 require "uri"
 require "json"
+require "resolv"
 
 module ImmosquareConstants
   module Ip
@@ -67,6 +68,36 @@ module ImmosquareConstants
       ##============================================================##
       def get_my_ip_from_aws
         get_public_ip_from_aws
+      end
+
+      ##============================================================##
+      ## Get the front IP — DNS resolution of the request host.
+      ## Represents the public IPv4 that browsers reach (reverse
+      ## proxy like Caddy/Nginx, CDN, load balancer...) before
+      ## traffic hits the application server.
+      ##
+      ## Uses explicit Google/Cloudflare nameservers with a 2s
+      ## timeout per server (so up to ~4s total in worst case) to
+      ## avoid hangs when the system resolver is misconfigured.
+      ## Filters to IPv4 only for consistency with the other IP
+      ## helpers in this module.
+      ##
+      ## Returns nil if request is missing, host is empty or no
+      ## IPv4 record is resolved.
+      ##============================================================##
+      def get_front_ip(request = nil)
+        return nil if request.nil?
+
+        host = request.host
+        return nil if host.nil? || host.empty?
+
+        Resolv::DNS.open(:nameserver_port => [["8.8.8.8", 53], ["1.1.1.1", 53]]) do |dns|
+          dns.timeouts = [2, 2]
+          dns.getaddresses(host).find {|a| a.is_a?(Resolv::IPv4) }&.to_s
+        end
+      rescue StandardError => e
+        puts("Error getting front IP: #{e.message}")
+        nil
       end
 
       ##============================================================##
