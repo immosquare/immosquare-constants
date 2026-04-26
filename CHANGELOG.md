@@ -1,3 +1,6 @@
+## [0.1.17] - 2026-04-25
+- **NEW**: Add `get_front_ip(request)` helper that resolves the request host through Google/Cloudflare DNS to return the public IPv4 of the reverse proxy / CDN / load balancer in front of the app
+
 ## [0.1.16] - 2025-10-06
 - disable ssl verification to avoid SSL_connect returned=1 errno=0
 
