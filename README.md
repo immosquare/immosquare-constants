@@ -130,6 +130,16 @@ puts locale_name
 
 Ensure you pass the locale as either a string or a symbol. If the locale isn't present in the list, it will return `nil`.
 
+To get only the base languages (without regional variants like `:"fr-CA"`, `:"en-US"`):
+
+```ruby
+languages = ImmosquareConstants::Locale.languages_with_native_names
+puts languages[:fr]
+# => Français
+puts languages[:"fr-CA"]
+# => nil (regional variants are filtered out)
+```
+
 
 ### Color
 
@@ -154,7 +164,7 @@ The `email_raw` method defines the core email matching pattern used by both the 
 ```ruby
 regex = ImmosquareConstants::Regex.email_raw
 puts regex.source
-# => "[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}"
+# => [A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}
 ```
 
 
@@ -250,9 +260,13 @@ bundle exec rspec --fail-fast
 bundle exec rake spec
 
 # Run sample tasks to test functionality
+bundle exec rake immosquare_constants:sample:ip:get_ips
 bundle exec rake immosquare_constants:sample:ip:get_my_ip_from_aws
 bundle exec rake immosquare_constants:sample:color:color_name_to_hex
 bundle exec rake immosquare_constants:sample:locale:native_name_for_locale
+bundle exec rake immosquare_constants:sample:regex:email
+bundle exec rake immosquare_constants:sample:regex:email_in_string
+bundle exec rake immosquare_constants:sample:regex:email_raw
 ```
 
 ### Test Coverage
