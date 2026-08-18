@@ -1,3 +1,10 @@
+---
+locale: en
+tags:
+  - app:immosquare-constants
+  - audience:technique
+---
+
 # Immosquare Constants
 
 `ImmosquareConstants` is a gem that provides a collection of constants useful for real estate applications, including a comprehensive list of global locales mapped to their native language names.
