@@ -5,13 +5,15 @@ tags:
   - audience:technique
 ---
 
-# Immosquare Constants
+# immosquare-constants
 
 `ImmosquareConstants` is a gem that provides a collection of constants useful for real estate applications, including a comprehensive list of global locales mapped to their native language names.
 
-## Installation
+This page is written for the Ruby developers who use the gem. It covers the installation, the four modules it exposes — `ImmosquareConstants::Ip` for IP detection, `ImmosquareConstants::Locale` for native language names, `ImmosquareConstants::Color` for CSS color names and `ImmosquareConstants::Regex` for email patterns — and how the gem's own test suite, coverage report and Jenkins pipeline are run. The only prerequisite is adding the gem to your Gemfile.
 
-Add this line to your Gemfile:
+## Installing the immosquare-constants gem
+
+To install immosquare-constants, add this line to your Gemfile:
 
 ```ruby
 gem "immosquare-constants"
@@ -23,13 +25,11 @@ Then run:
 bundle install
 ```
 
-## Usage
+## Detecting local, public and client IP addresses with ImmosquareConstants::Ip
 
-### IP
+The `ImmosquareConstants::Ip` module provides comprehensive IP address management with intelligent proxy handling and multiple output formats.
 
-The IP module provides comprehensive IP address management with intelligent proxy handling and multiple output formats.
-
-#### Get IP addresses
+**Get IP addresses.** `get_ips` returns the local, public and client IP addresses of a request:
 
 ```ruby
 # Get local, public and client IP addresses
@@ -44,7 +44,7 @@ puts "Client IP: #{ips.client}"
 # Client IP: 10.0.0.1
 ```
 
-#### Get public IP address
+**Get the public IP address of the machine.** `get_my_ip_from_aws` takes no request:
 
 ```ruby
 # Get the public IP address of the machine
@@ -53,9 +53,7 @@ puts ip
 # => 203.0.113.1
 ```
 
-#### Get front IP
-
-`get_front_ip` resolves the request host through DNS to return the public IPv4 address that browsers actually reach (reverse proxy, CDN, load balancer) before traffic hits the application server. Useful when you need to know "from the outside, what IP does my domain point to?".
+**Get the front IP.** `get_front_ip` resolves the request host through DNS to return the public IPv4 address that browsers actually reach (reverse proxy, CDN, load balancer) before traffic hits the application server. Useful when you need to know "from the outside, what IP does my domain point to?".
 
 ```ruby
 # Inside a controller / middleware
@@ -64,14 +62,12 @@ puts front_ip
 # => 203.0.113.1
 ```
 
-Behavior:
+Behavior of `get_front_ip`:
 - Uses explicit Google (`8.8.8.8`) and Cloudflare (`1.1.1.1`) nameservers with a 2s timeout per server, to avoid hangs when the system resolver is misconfigured.
 - Filters to IPv4 only, for consistency with the other IP helpers.
 - Returns `nil` if `request` is missing, the host is empty, or DNS resolution fails.
 
-#### Multiple output formats
-
-The `get_ips` method returns an `IpResult` object with various conversion methods:
+**Multiple output formats.** The `get_ips` method returns an `IpResult` object with various conversion methods:
 
 ```ruby
 ips = ImmosquareConstants::Ip.get_ips(request)
@@ -97,18 +93,14 @@ client_ip = ImmosquareConstants::Ip.get_ips(request)&.client
 public_ip = ImmosquareConstants::Ip.get_ips(request)&.public
 ```
 
-#### Intelligent proxy handling
-
-The IP detection uses a smart hierarchy:
+**Intelligent proxy handling.** The IP detection uses a smart hierarchy:
 1. `HTTP_X_REAL_IP` header (often set by load balancers/proxies)
 2. `request.ip` (Rails intelligent method)
 3. `request.remote_ip` (direct connection IP)
 
 This ensures accurate client IP detection even behind proxies, load balancers, or CDNs.
 
-#### Iterating over the IPs
-
-`IpResult` iterates over key/value pairs, the keys being `:local`, `:public` and `:client`:
+**Iterating over the IPs.** `IpResult` iterates over key/value pairs, the keys being `:local`, `:public` and `:client`:
 
 ```ruby
 ips = ImmosquareConstants::Ip.get_ips(request)
@@ -130,8 +122,9 @@ end
 # 2: :client => 10.0.0.1
 ```
 
+## Looking up locale native names and CSS color hex values
 
-### Locale
+`ImmosquareConstants::Locale` and `ImmosquareConstants::Color` are two lookup modules over the constants shipped with the gem: locale codes mapped to native language names, and CSS color names mapped to hexadecimal values.
 
 To retrieve the native language name for a given locale:
 
@@ -153,10 +146,7 @@ puts languages[:"fr-CA"]
 # => nil (regional variants are filtered out)
 ```
 
-
-### Color
-
-Convert a color name to its hexadecimal value (case-insensitive):
+To convert a color name to its hexadecimal value (case-insensitive):
 
 ```ruby
 color = ImmosquareConstants::Color.color_name_to_hex("red")
@@ -169,17 +159,17 @@ ImmosquareConstants::Color.color_name_to_hex("Red")     # => #ff0000
 ImmosquareConstants::Color.color_name_to_hex(:red)      # => #ff0000
 ```
 
-### Regex
+## Matching and validating email addresses with ImmosquareConstants::Regex
 
-#### email_raw
-The `email_raw` method defines the core email matching pattern used by both the `email` and `email_in_string` methods:
+`ImmosquareConstants::Regex` exposes three email patterns: `email_raw`, `email` and `email_in_string`.
+
+**`email_raw`** defines the core email matching pattern used by both the `email` and `email_in_string` methods:
 
 ```ruby
 regex = ImmosquareConstants::Regex.email_raw
 puts regex.source
 # => [A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}
 ```
-
 
 - `[A-Z0-9._%+-]+`: Matches one or more allowed characters in the local part of the email (before the `@`), including letters, digits, and common special characters.
 
@@ -191,7 +181,9 @@ puts regex.source
 
 - `[A-Z]{2,}`: Matches a domain extension consisting of at least two letters (e.g., `com`, `org`, `net`, `fr`).
 
-#### email
+The three patterns all carry the `/i` flag, so the upper-case character classes match lower-case addresses just as well. That flag is part of the `Regexp` object but not of `regex.source`, which is why it does not appear in the output printed above.
+
+**`email`** matches a full email address:
 
 ```ruby
 email = "test@test.com"
@@ -206,41 +198,31 @@ To validate an email format using a regular expression:
 validates_format_of :email, :with => ImmosquareConstants::Regex.email
 ```
 
----
-
-#### Email within a string
-To match an email embedded in a string:
+**`email_in_string`** matches an email embedded in a string:
 
 ```ruby
-text   = "Contact us at test@test.com for more info or <test2@test2.fr"
+text   = "Contact us at test@test.com for more info or <test2@test2.fr>"
 emails = text.scan(ImmosquareConstants::Regex.email_in_string)
 puts emails.inspect
 # => ["test@test.com", "test2@test2.fr"]
 ```
 
+## Running the immosquare-constants test suite with RSpec
 
-
-
-## Testing
-
-This gem uses RSpec for testing. Here's how to run the tests:
-
-### Prerequisites
-
-Make sure you have all dependencies installed:
+This gem uses RSpec for testing. Make sure you have all dependencies installed:
 
 ```bash
 bundle install
 ```
 
-### Running Tests
+Run all tests:
 
-#### Run all tests
 ```bash
 bundle exec rspec
 ```
 
-#### Run tests for a specific module
+Run tests for a specific module:
+
 ```bash
 # Test IP module only
 bundle exec rspec spec/lib/immosquare-constants/ip_spec.rb
@@ -255,7 +237,8 @@ bundle exec rspec spec/lib/immosquare-constants/locale_spec.rb
 bundle exec rspec spec/lib/immosquare-constants/regex_spec.rb
 ```
 
-#### Run tests with more details
+Run tests with more details:
+
 ```bash
 # Show detailed output
 bundle exec rspec --format documentation
@@ -267,7 +250,8 @@ bundle exec rspec --format progress
 bundle exec rspec --fail-fast
 ```
 
-#### Using Rake tasks
+Run the suite and the sample tasks through Rake:
+
 ```bash
 # Run all tests via Rake
 bundle exec rake spec
@@ -282,17 +266,15 @@ bundle exec rake immosquare_constants:sample:regex:email_in_string
 bundle exec rake immosquare_constants:sample:regex:email_raw
 ```
 
-### Test Coverage
-
 The test suite covers:
 - ✅ **IP Module**: Local, public and client IP detection, proxy handling, multiple output formats
 - ✅ **Color Module**: Color name to hex conversion with case-insensitive support
 - ✅ **Locale Module**: Native language name retrieval with nil fallback handling
 - ✅ **Regex Module**: Email validation patterns and string matching
 
-### Coverage report
+## Coverage report and Jenkins continuous integration for immosquare-constants
 
-Coverage is measured by SimpleCov, and only when `COVERAGE=true` is exported — a plain `bundle exec rspec` stays fast and leaves no `coverage/` directory behind.
+Coverage of the immosquare-constants suite is measured by SimpleCov, and only when `COVERAGE=true` is exported — a plain `bundle exec rspec` stays fast and leaves no `coverage/` directory behind.
 
 ```bash
 COVERAGE=true bundle exec rspec
@@ -300,9 +282,7 @@ COVERAGE=true bundle exec rspec
 
 Two reports land in `coverage/`: `index.html` to read locally, and `lcov.info` for the CI. Branch coverage is enabled and `spec/` is excluded from the measurement.
 
-### Continuous Integration
-
-Jenkins builds the gem through the `Jenkinsfile` at the root, which calls the same entry point twice:
+Jenkins builds the gem through the `Jenkinsfile` at the root, which calls the same entry point twice — the table below lists each `bin/ci` command and what it performs on the build agent:
 
 | Command        | What it does                                                                       |
 | -------------- | ---------------------------------------------------------------------------------- |
@@ -313,11 +293,8 @@ Jenkins builds the gem through the `Jenkinsfile` at the root, which calls the sa
 
 Anything the specs need therefore belongs to the `test` group of the Gemfile, never to `development`, which the CI does not install.
 
-
-## Contributing
+## Contributing to immosquare-constants and license
 
 Contributions are very much welcome! If you have enhancements, bug fixes, or other suggestions, please open an issue or submit a pull request on our [GitHub repository](https://github.com/immosquare/immosquare-constants).
-
-## License
 
 This gem is licensed under the terms of the [MIT License](https://opensource.org/licenses/MIT).
