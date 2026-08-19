@@ -11,8 +11,16 @@ tags:
 
 ## Installation
 
+Add this line to your Gemfile:
+
 ```ruby
 gem "immosquare-constants"
+```
+
+Then run:
+
+```bash
+bundle install
 ```
 
 ## Usage
@@ -72,7 +80,7 @@ ips = ImmosquareConstants::Ip.get_ips(request)
 puts ips.to_json
 # => {"local":"192.168.1.100","public":"203.0.113.1","client":"10.0.0.1"}
 
-# Hash conversion
+# Hash conversion (`to_h` is an alias of `to_hash`)
 hash = ips.to_hash
 # => {:local=>"192.168.1.100", :public=>"203.0.113.1", :client=>"10.0.0.1"}
 
@@ -98,14 +106,14 @@ The IP detection uses a smart hierarchy:
 
 This ensures accurate client IP detection even behind proxies, load balancers, or CDNs.
 
-### Itération sur les IPs
+#### Iterating over the IPs
 
-Vous pouvez itérer sur les paires clé-valeur (clé : :local, :public, :client) de l'objet `IpResult` :
+`IpResult` iterates over key/value pairs, the keys being `:local`, `:public` and `:client`:
 
 ```ruby
 ips = ImmosquareConstants::Ip.get_ips(request)
 
-# Itération sur les paires clé-valeur
+# Iterate over key/value pairs
 ips.each do |key, value|
   puts "#{key} => #{value}"
 end
@@ -113,7 +121,7 @@ end
 # :public => 203.0.113.1
 # :client => 10.0.0.1
 
-# Itération avec index
+# Iterate with an index
 ips.each_with_index do |(key, value), index|
   puts "#{index}: #{key} => #{value}"
 end
@@ -121,8 +129,6 @@ end
 # 1: :public => 203.0.113.1
 # 2: :client => 10.0.0.1
 ```
-
-L'itération se fait désormais sur le hash, ce qui permet d'accéder à la clé et à la valeur à chaque tour de boucle.
 
 
 ### Locale
@@ -284,9 +290,28 @@ The test suite covers:
 - ✅ **Locale Module**: Native language name retrieval with nil fallback handling
 - ✅ **Regex Module**: Email validation patterns and string matching
 
+### Coverage report
+
+Coverage is measured by SimpleCov, and only when `COVERAGE=true` is exported — a plain `bundle exec rspec` stays fast and leaves no `coverage/` directory behind.
+
+```bash
+COVERAGE=true bundle exec rspec
+```
+
+Two reports land in `coverage/`: `index.html` to read locally, and `lcov.info` for the CI. Branch coverage is enabled and `spec/` is excluded from the measurement.
+
 ### Continuous Integration
 
-Tests are automatically run on every pull request to ensure code quality and prevent regressions.
+Jenkins builds the gem through the `Jenkinsfile` at the root, which calls the same entry point twice:
+
+| Command        | What it does                                                                       |
+| -------------- | ---------------------------------------------------------------------------------- |
+| `bin/ci init`  | Installs the bundle, skipping the `development` group (editor and linter tooling)   |
+| `bin/ci test`  | Runs `bundle exec rspec`                                                           |
+
+`bin/ci` works the same on a laptop: everything specific to the build agent — RVM, the ruby from `.ruby-version`, the bundler pin — runs only when `JENKINS_WORKSPACE` is set. The pipeline exports `COVERAGE=true` and publishes `coverage/lcov.info` as its coverage report.
+
+Anything the specs need therefore belongs to the `test` group of the Gemfile, never to `development`, which the CI does not install.
 
 
 ## Contributing

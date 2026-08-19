@@ -7,8 +7,11 @@ Gem Ruby (>= 3.2.6) fournissant des constantes et helpers : détection IP, noms 
 ## Commands
 
 ```bash
-bundle install          # Install dependencies
-bundle exec rspec       # Run tests
+bundle install                    # Install dependencies
+bundle exec rspec                 # Run tests
+COVERAGE=true bundle exec rspec   # Run tests with the SimpleCov report in coverage/
+bin/ci init                       # CI: install the bundle without the development group
+bin/ci test                       # CI: run the suite (same behaviour on a laptop)
 ```
 
 ## Architecture
