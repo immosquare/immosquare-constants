@@ -9,7 +9,7 @@ tags:
 
 `ImmosquareConstants` is a gem that provides a collection of constants useful for real estate applications, including a comprehensive list of global locales mapped to their native language names.
 
-This page is written for the Ruby developers who use the gem. It covers the installation, the four modules it exposes — `ImmosquareConstants::Ip` for IP detection, `ImmosquareConstants::Locale` for native language names, `ImmosquareConstants::Color` for CSS color names and `ImmosquareConstants::Regex` for email patterns — and how the gem's own test suite, coverage report and Jenkins pipeline are run. The only prerequisite is adding the gem to your Gemfile.
+This page is written for the Ruby developers who use the gem. It covers the installation, the four modules it exposes — `ImmosquareConstants::Ip` for IP detection, `ImmosquareConstants::Locale` for native language names, `ImmosquareConstants::Color` for CSS color names and `ImmosquareConstants::Regex` for email patterns — and how the gem's own test suite, coverage report and CI pipeline are run. The only prerequisite is adding the gem to your Gemfile.
 
 ## Installing the immosquare-constants gem
 
@@ -272,7 +272,7 @@ The test suite covers:
 - ✅ **Locale Module**: Native language name retrieval with nil fallback handling
 - ✅ **Regex Module**: Email validation patterns and string matching
 
-## Coverage report and Jenkins continuous integration for immosquare-constants
+## Coverage report and continuous integration for immosquare-constants
 
 Coverage of the immosquare-constants suite is measured by SimpleCov, and only when `COVERAGE=true` is exported — a plain `bundle exec rspec` stays fast and leaves no `coverage/` directory behind.
 
@@ -282,14 +282,15 @@ COVERAGE=true bundle exec rspec
 
 Two reports land in `coverage/`: `index.html` to read locally, and `lcov.info` for the CI. Branch coverage is enabled and `spec/` is excluded from the measurement.
 
-Jenkins builds the gem through the `Jenkinsfile` at the root, which calls the same entry point twice — the table below lists each `bin/ci` command and what it performs on the build agent:
+The CI builds the gem through `bin/ci`, its single entry point — the table below lists each command and what it performs on the build agent:
 
 | Command        | What it does                                                                       |
 | -------------- | ---------------------------------------------------------------------------------- |
 | `bin/ci init`  | Installs the bundle, skipping the `development` group (editor and linter tooling)   |
 | `bin/ci test`  | Runs `bundle exec rspec`                                                           |
+| `bin/ci`       | Both, in that order (the default, `all`)                                            |
 
-`bin/ci` works the same on a laptop: everything specific to the build agent — RVM, the ruby from `.ruby-version`, the bundler pin — runs only when `JENKINS_WORKSPACE` is set. The pipeline exports `COVERAGE=true` and publishes `coverage/lcov.info` as its coverage report.
+`bin/ci` works the same on a laptop: it provisions no Ruby of its own, the runner selecting the ruby of `.ruby-version` and the gemset of `.ruby-gemset` before calling it. The script defaults `COVERAGE` to `true`, and the CI publishes `coverage/lcov.info` as its coverage report.
 
 Anything the specs need therefore belongs to the `test` group of the Gemfile, never to `development`, which the CI does not install.
 
