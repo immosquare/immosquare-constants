@@ -6,6 +6,7 @@ require "resolv"
 
 module ImmosquareConstants
   module Ip
+    PUBLIC_IP_TIMEOUT = 2
     ##============================================================##
     ## Simple class to provide dot notation access to IP addresses
     ##============================================================##
@@ -159,14 +160,21 @@ module ImmosquareConstants
 
       ##============================================================##
       ## Get public IP address with fallback
+      ##
+      ## Callers run inside web requests (Rack middlewares): without
+      ## explicit timeouts, Net::HTTP waits up to 60s to connect and
+      ## 60s to read, so a slow checkip endpoint would hold a server
+      ## thread for two minutes per request.
       ##============================================================##
       def get_public_ip_from_aws
         begin
           begin
-            uri              = URI.parse("https://checkip.amazonaws.com/")
-            http             = Net::HTTP.new(uri.host, uri.port)
-            http.use_ssl     = true
-            http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+            uri               = URI.parse("https://checkip.amazonaws.com/")
+            http              = Net::HTTP.new(uri.host, uri.port)
+            http.use_ssl      = true
+            http.verify_mode  = OpenSSL::SSL::VERIFY_NONE
+            http.open_timeout = PUBLIC_IP_TIMEOUT
+            http.read_timeout = PUBLIC_IP_TIMEOUT
             response = http.get(uri.request_uri)
             raise("No IP found") if !response.is_a?(Net::HTTPSuccess)
 
