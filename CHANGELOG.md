@@ -1,3 +1,6 @@
+## [0.1.18] - 2026-09-30
+- **FIXED**: The public IP lookup (`checkip.amazonaws.com`, used by `get_ips`, `get_my_ip_from_aws` and the `get_client_ip` fallback) now has 2s connect and read timeouts, so a slow endpoint no longer holds the calling thread for up to two minutes
+
 ## [0.1.17] - 2026-04-25
 - **NEW**: Add `get_front_ip(request)` helper that resolves the request host through Google/Cloudflare DNS to return the public IPv4 of the reverse proxy / CDN / load balancer in front of the app
 
