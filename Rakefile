@@ -31,7 +31,7 @@ namespace :immosquare_constants do
       task :native_name_for_locale do
         locale      = :fr
         locale_name = ImmosquareConstants::Locale.native_name_for_locale(locale)
-        puts locale_name
+        puts(locale_name)
       end
     end
 
@@ -58,7 +58,7 @@ namespace :immosquare_constants do
         ]
         (valid_emails + invalid_emails).each do |email|
           tester = ImmosquareConstants::Regex.email.match?(email)
-          puts "Email: #{email} => #{tester}"
+          puts("Email: #{email} => #{tester}")
         end
       end
 
@@ -68,7 +68,7 @@ namespace :immosquare_constants do
       task :email_in_string do
         text   = "Veuillez contacter support@example.com ou sales@example.org pour plus d'informations."
         emails = text.scan(ImmosquareConstants::Regex.email_in_string)
-        puts "Adresses email trouvées : #{emails.join(", ")}" if emails.any?
+        puts("Adresses email trouvées : #{emails.join(", ")}") if emails.any?
       end
 
       ##============================================================##
@@ -84,9 +84,9 @@ namespace :immosquare_constants do
         texts.each do |text|
           email_found = text.scan(ImmosquareConstants::Regex.email_raw)
           if email_found.any?
-            puts "Email brut trouvé dans '#{text}' : #{email_found.join(", ")}"
+            puts("Email brut trouvé dans '#{text}' : #{email_found.join(", ")}")
           else
-            puts "Aucun email trouvé dans '#{text}'."
+            puts("Aucun email trouvé dans '#{text}'.")
           end
         end
       end
@@ -100,7 +100,7 @@ namespace :immosquare_constants do
       task :color_name_to_hex do
         color     = "red"
         color_hex = ImmosquareConstants::Color.color_name_to_hex(color)
-        puts "#{color} => #{color_hex}"
+        puts("#{color} => #{color_hex}")
       end
     end
   end

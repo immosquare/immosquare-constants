@@ -155,6 +155,7 @@ module ImmosquareConstants
 
       def color_name_to_hex(color_name)
         return nil if color_name.nil?
+
         COLORS[color_name.to_s.downcase.to_sym] || nil
       end
 

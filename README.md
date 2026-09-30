@@ -286,9 +286,9 @@ The CI builds the gem through `bin/ci`, its single entry point — the table bel
 
 | Command        | What it does                                                                       |
 | -------------- | ---------------------------------------------------------------------------------- |
-| `bin/ci init`  | Installs the bundle, skipping the `development` group (editor and linter tooling)   |
+| `bin/ci init`  | Installs the bundle, skipping the `development` group (editor and linter tooling)  |
 | `bin/ci test`  | Runs `bundle exec rspec`                                                           |
-| `bin/ci`       | Both, in that order (the default, `all`)                                            |
+| `bin/ci`       | Both, in that order (the default, `all`)                                           |
 
 `bin/ci` works the same on a laptop: it provisions no Ruby of its own, the runner selecting the ruby of `.ruby-version` and the gemset of `.ruby-gemset` before calling it. The script defaults `COVERAGE` to `true`, and the CI publishes `coverage/lcov.info` as its coverage report.
 
