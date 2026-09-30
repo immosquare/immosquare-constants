@@ -3,6 +3,7 @@ require "net/http"
 require "uri"
 require "json"
 require "resolv"
+require "rubygems/deprecate"
 
 module ImmosquareConstants
   module Ip
@@ -67,9 +68,17 @@ module ImmosquareConstants
       ##============================================================##
       ## Method to get the public IP address used to access the internet
       ##============================================================##
-      def get_my_ip_from_aws
-        get_public_ip_from_aws
+      def my_ip_from_aws
+        public_ip_from_aws
       end
+
+      ##============================================================##
+      ## Deprecated names, removed on or after 2027-01
+      ##============================================================##
+      extend Gem::Deprecate
+
+      alias get_my_ip_from_aws my_ip_from_aws
+      deprecate(:get_my_ip_from_aws, :my_ip_from_aws, 2027, 1)
 
       ##============================================================##
       ## Get the front IP — DNS resolution of the request host.
@@ -106,8 +115,8 @@ module ImmosquareConstants
       ##============================================================##
       def get_ips(request = nil)
         IpResult.new(
-          get_local_ip,
-          get_public_ip_from_aws,
+          local_ip,
+          public_ip_from_aws,
           get_client_ip(request)
         )
       end
@@ -118,18 +127,15 @@ module ImmosquareConstants
       ## Use a Socket to get the local IP address
       ## by connecting to Google's DNS server
       ##============================================================##
-      def get_local_ip
-        local_ip = nil
-        begin
-          socket = Socket.new(Socket::AF_INET, Socket::SOCK_DGRAM)
-          socket.connect(Addrinfo.tcp("8.8.8.8", 53))
-          local_ip = socket.local_address.ip_address
-          socket.close
-        rescue StandardError => e
-          puts("Error getting local IP: #{e.message}")
-        ensure
-          return local_ip
-        end
+      def local_ip
+        socket = Socket.new(Socket::AF_INET, Socket::SOCK_DGRAM)
+        socket.connect(Addrinfo.tcp("8.8.8.8", 53))
+        socket.local_address.ip_address
+      rescue StandardError => e
+        puts("Error getting local IP: #{e.message}")
+        nil
+      ensure
+        socket&.close
       end
 
       ##============================================================##
@@ -154,7 +160,7 @@ module ImmosquareConstants
 
           ip
         rescue StandardError
-          get_public_ip_from_aws
+          public_ip_from_aws
         end
       end
 
@@ -166,7 +172,7 @@ module ImmosquareConstants
       ## 60s to read, so a slow checkip endpoint would hold a server
       ## thread for two minutes per request.
       ##============================================================##
-      def get_public_ip_from_aws
+      def public_ip_from_aws
         begin
           begin
             uri               = URI.parse("https://checkip.amazonaws.com/")

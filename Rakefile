@@ -12,15 +12,15 @@ namespace :immosquare_constants do
       task :get_ips do
         ips = ImmosquareConstants::Ip.get_ips
         ips.each do |key, value|
-          puts "#{key} => #{value}"
+          puts("#{key} => #{value}")
         end
       end
 
       ##============================================================##
-      ## bundle exec rake immosquare_constants:sample:ip:get_my_ip_from_aws
+      ## bundle exec rake immosquare_constants:sample:ip:my_ip_from_aws
       ##============================================================##
-      task :get_my_ip_from_aws do
-        puts ImmosquareConstants::Ip.get_my_ip_from_aws
+      task :my_ip_from_aws do
+        puts(ImmosquareConstants::Ip.my_ip_from_aws)
       end
     end
 

@@ -44,11 +44,11 @@ puts "Client IP: #{ips.client}"
 # Client IP: 10.0.0.1
 ```
 
-**Get the public IP address of the machine.** `get_my_ip_from_aws` takes no request:
+**Get the public IP address of the machine.** `my_ip_from_aws` takes no request. The former name `get_my_ip_from_aws` still works but is deprecated and will be removed on or after 2027-01:
 
 ```ruby
 # Get the public IP address of the machine
-ip = ImmosquareConstants::Ip.get_my_ip_from_aws
+ip = ImmosquareConstants::Ip.my_ip_from_aws
 puts ip
 # => 203.0.113.1
 ```
@@ -258,7 +258,7 @@ bundle exec rake spec
 
 # Run sample tasks to test functionality
 bundle exec rake immosquare_constants:sample:ip:get_ips
-bundle exec rake immosquare_constants:sample:ip:get_my_ip_from_aws
+bundle exec rake immosquare_constants:sample:ip:my_ip_from_aws
 bundle exec rake immosquare_constants:sample:color:color_name_to_hex
 bundle exec rake immosquare_constants:sample:locale:native_name_for_locale
 bundle exec rake immosquare_constants:sample:regex:email

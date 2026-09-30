@@ -1,15 +1,15 @@
 require "spec_helper"
 
 RSpec.describe(ImmosquareConstants::Ip) do
-  describe(".get_my_ip_from_aws") do
+  describe(".my_ip_from_aws") do
     it("returns a valid IP address") do
-      ip = described_class.get_my_ip_from_aws
+      ip = described_class.my_ip_from_aws
       expect(ip).to(be_a(String))
       expect(ip).to(match(/\A\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/))
     end
 
     it("does not return localhost") do
-      ip = described_class.get_my_ip_from_aws
+      ip = described_class.my_ip_from_aws
       expect(ip).not_to(eq("127.0.0.1"))
     end
   end
