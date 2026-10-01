@@ -44,7 +44,7 @@ puts "Client IP: #{ips.client}"
 # Client IP: 10.0.0.1
 ```
 
-**Get the public IP address of the machine.** `my_ip_from_aws` takes no request. The former name `get_my_ip_from_aws` still works but is deprecated and will be removed on or after 2027-01:
+**Get the public IP address of the machine.** `my_ip_from_aws` takes no request. It calls `https://checkip.amazonaws.com/` with a 2 second connect timeout and a 2 second read timeout (`ImmosquareConstants::Ip::PUBLIC_IP_TIMEOUT`), so a slow endpoint cannot hold the caller for the default minute-long `Net::HTTP` waits. `get_ips` uses the same call for its public address, and again when it cannot read a client address from the request (no request, no address, or `127.0.0.1`). On timeout or any other failure the call falls back to a private IPv4 on the machine, then to `0.0.0.0`. The former name `get_my_ip_from_aws` still works but is deprecated and will be removed on or after 2027-01:
 
 ```ruby
 # Get the public IP address of the machine
